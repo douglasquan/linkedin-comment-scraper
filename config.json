@@ -1,0 +1,9 @@
+{
+    "name_class" : "comments-post-meta__name",
+    "position_class" : "comments-post-meta__headline",
+    "linkedin_url_class" : "comments-post-meta__actor-link",
+    "comment_class" : "comments-comment-item__main-content",
+    "show_comments_class" : "comments-comments-list__load-more-comments-button",
+    "show_replies_class": "show-prev-replies",
+    "filename" : "data"
+}
