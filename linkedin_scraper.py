@@ -73,6 +73,8 @@ def show_more(target, target_class, driver):
     as specified"""
     logging.info(f"Attempting to load more {target}")
     try:
+        sleep(5)
+
         load_more_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.CLASS_NAME, target_class)))
         action = ActionChains(driver)
         while True:
@@ -83,6 +85,29 @@ def show_more(target, target_class, driver):
             logging.info(f"Loading more {target}...")
     except Exception as e:
         logging.info(f"All {target} are loaded ")
+
+
+def set_comments_to_most_recent(driver):
+    """ Set the comments sorting order to 'Most Recent' on the LinkedIn post """
+    try:
+        logging.info("Attempting to change comment sorting order to 'Most Recent'...")
+        # Click the dropdown trigger to open the sort options
+        sort_order_trigger = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "comments-sort-order-toggle__trigger"))
+        )
+        sort_order_trigger.click()
+
+        # Wait for the dropdown options to be visible and select 'Most Recent'
+        most_recent_option = WebDriverWait(driver, 10).until(
+            EC.visibility_of_element_located(
+                (By.XPATH, "//li[@aria-label='Most recent. See all comments, the most recent comments are first']"))
+        )
+        most_recent_option.click()
+
+        logging.info("Comment sort order set to 'Most Recent'.")
+    except Exception as e:
+        logging.error(f"Failed to set comment sorting order: {e}")
+        raise
 
 
 def write2csv(file_path, names, positions, linkedin_urls, comments):
@@ -158,6 +183,9 @@ def scrape_comments(url):
 
             # Navigate to the specified post URL
             driver.get(url)
+
+            # Set comment sorting to 'Most Recent'
+            set_comments_to_most_recent(driver)
 
             # Expand all comments available
             show_more("comments", config["show_comments_class"], driver)
