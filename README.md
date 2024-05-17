@@ -8,6 +8,7 @@ This tool is designed to scrape comments from LinkedIn posts, extracting detaile
 
 - Python 3.6 or higher
 - pip for installing Python packages
+- Google Chrome 
 
     
 ## Set Up Environment Variables for Login Credentials 
